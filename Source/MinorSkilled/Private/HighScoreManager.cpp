@@ -17,7 +17,7 @@ UHighScoreManager* UHighScoreManager::GetInstance()
 UHighScoreManager::UHighScoreManager()
 {
     //HighScore = 0;  // Default high score
-    Initialize();
+    //Initialize();
 }
 
 void UHighScoreManager::Initialize()

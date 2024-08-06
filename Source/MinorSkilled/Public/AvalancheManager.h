@@ -30,4 +30,9 @@ protected:
     // EditAnywhere allows you to manually assign snowballs in the editor
     UPROPERTY(EditAnywhere, Category = "Avalanche")
     TArray<AGrowingSnowball*> Snowballs;
+
+
+    // Called when the game starts or when spawned
+    UFUNCTION(BlueprintCallable, Category = "Avalanche")
+    void GetAllSnowballs();
 };

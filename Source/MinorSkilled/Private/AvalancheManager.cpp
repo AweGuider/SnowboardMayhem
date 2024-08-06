@@ -11,6 +11,24 @@ AAvalancheManager::AAvalancheManager()
 
 }
 
+
+void AAvalancheManager::GetAllSnowballs()
+{
+    TArray<AActor*> SnowballChildren;
+    GetAttachedActors(SnowballChildren);  // This function fills the array with all actors attached to the manager
+
+    for (AActor* Child : SnowballChildren)
+    {
+        AGrowingSnowball* Snowball = Cast<AGrowingSnowball>(Child);
+        if (Snowball)
+        {
+            // Do something with Snowball
+            // For example, you could store them in a list or perform some operation
+            Snowballs.Add(Snowball);
+        }
+    }
+}
+
 void AAvalancheManager::TriggerAvalanche()
 {
     // Logic to release snowballs or start particle effects
@@ -22,4 +40,5 @@ void AAvalancheManager::TriggerAvalanche()
         }
     }
 }
+
 

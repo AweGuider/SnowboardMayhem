@@ -25,6 +25,19 @@ AFlags::AFlags()
     //TriggerVolume->OnComponentBeginOverlap.AddDynamic(this, &AFlags::OnPlayerPassThrough);
 }
 
+// Called when the game starts or when spawned
+void AFlags::BeginPlay()
+{
+    Super::BeginPlay();
+
+}
+
+// Called every frame
+void AFlags::Tick(float DeltaTime)
+{
+    Super::Tick(DeltaTime);
+}
+
 void AFlags::InitializeComponents(UStaticMeshComponent* LeftFlagMesh, UStaticMeshComponent* RightFlagMesh, UBoxComponent* BoxCollision)
 {
     LeftFlag = LeftFlagMesh;
@@ -33,35 +46,22 @@ void AFlags::InitializeComponents(UStaticMeshComponent* LeftFlagMesh, UStaticMes
 
 }
 
-// Called when the game starts or when spawned
-void AFlags::BeginPlay()
-{
-	Super::BeginPlay();
-	
-}
-
-// Called every frame
-void AFlags::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
-
 void AFlags::OnPlayerPassThrough(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-    if (GEngine)
-        GEngine->AddOnScreenDebugMessage(-1, 15.0f, 
-            FColor::Yellow, 
-            FString::Printf(TEXT("Got in OnPlayerPassThrough %f"), GetWorld()->TimeSeconds));
-    if (OtherActor && OtherActor->IsA(ASnowboarder::StaticClass()))
+    //if (GEngine)
+    //    GEngine->AddOnScreenDebugMessage(-1, 15.0f, 
+    //        FColor::Yellow, 
+    //        FString::Printf(TEXT("Got in OnPlayerPassThrough %f"), GetWorld()->TimeSeconds));
+    if (OtherActor && OtherActor->IsA(ASnowboarder::StaticClass()) && !bIsTriggered)
     {
-        if (GEngine)
-            GEngine->AddOnScreenDebugMessage(-1, 15.0f,
-                FColor::Yellow,
-                FString::Printf(TEXT("Correct Actor %f"), GetWorld()->TimeSeconds));
+        //if (GEngine)
+        //    GEngine->AddOnScreenDebugMessage(-1, 15.0f,
+        //        FColor::Yellow,
+        //        FString::Printf(TEXT("Correct Actor %f"), GetWorld()->TimeSeconds));
 
         // Change flags to green
-        LeftFlag->SetMaterial(0, GreenMaterial);
-        RightFlag->SetMaterial(0, GreenMaterial);
+        //LeftFlag->SetMaterial(0, GreenMaterial);
+        //RightFlag->SetMaterial(0, GreenMaterial);
 
         // Increase score
         //UHighScoreManager* ScoreManager = Cast<UHighScoreManager>(UGameplayStatics::GetActorOfClass(GetWorld(), UHighScoreManager::StaticClass()));
@@ -77,6 +77,8 @@ void AFlags::OnPlayerPassThrough(UPrimitiveComponent* OverlappedComponent, AActo
 
         UHighScoreManager* ScoreManager = UHighScoreManager::GetInstance();
         ScoreManager->UpdateHighScore(1);
+
+        bIsTriggered = true;
     }
 }
 

@@ -66,9 +66,9 @@ void ASnowboarder::CalculateVelocity(FVector CurrentVelocity)
 
 void ASnowboarder::ProcessLineTrace(bool bHit, FVector HitNormal)
 {
-	Grounded = bHit;
+	IsGrounded = bHit;
 
-	if (Grounded)
+	if (IsGrounded)
 	{
 		OutHitNormal = HitNormal;
 	}
@@ -87,7 +87,7 @@ void ASnowboarder::AlignSnowboardWithSlope(float DeltaTime)
 	// Debugging values before using them
 	//UE_LOG(LogTemp, Warning, TEXT("OutHitNormal: %s, SnowboardForwardVector: %s"), *OutHitNormal.ToString(), *SnowboardForwardVector.ToString());
 
-	if (Grounded)
+	if (IsGrounded)
 	{
 
 		// #TODO Need to learn how to debug and check if code gets here
